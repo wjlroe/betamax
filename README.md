@@ -1,7 +1,7 @@
 betamax
 =======
 
-Mock out clj-http with style
+Mock out [clj-http](https://github.com/dakrone/clj-http) with style. Works just like [VCR](https://github.com/myronmarston/vcr).
 
 ## Usage
 
