@@ -5,11 +5,13 @@ Mock out clj-http with style
 
 ## Usage
 
-Put the following in test_helper.clj and use it in all your test namespaces:
+Put the following in `test_helper.clj` and use it in all your test namespaces:
 
 ```clojure
 (betamax/configure "fixtures/betamax_cassettes")
 ```
+
+To test using [Midje](https://github.com/marick/Midje):
 
 ```clojure
 (deftest something
