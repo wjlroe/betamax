@@ -1,12 +1,28 @@
 (ns betamax.test.core
   (:use betamax.core :reload)
   (:use
-   midje.sweet))
+   midje.sweet
+   clojure.java.io)
+  (:require
+   [clj-http.client]))
 
-(fact "create new cassette"
-      (with-cassette "new-cassette"
-        ))
+(against-background
+ [(around :facts
+          (binding [cassette-location "/tmp/betamax-cassettes"]
+            ?form))]
 
-(fact "no cassette exists - call out to the network")
-(fact "read a cassette file")
-(fact "cassette exists - don't call out to the network")
+ (fact "no cassette exists - call out to the network"
+       (with-cassette "non-existant"
+         (:body (clj-http.client/get "http://example.com")) =>
+         #"Example text")
+       (provided
+        (clj-http.client/get anything) => "Example text" :times 1
+        (spit "Example text" (file cassette-location "non-existant")) => true :times 1))
+
+ (fact "cassette exists - don't call out to the network"
+       (with-cassette "existing-cassette"
+         (:body (clj-http.client/get "http://example.com")) =>
+         #"Example text")
+       (provided
+        (clj-http.client/get anything) => 1 :times 0
+        (slurp "existing-cassette") => "Example text")))
