@@ -1,4 +1,4 @@
-(defproject betamax "0.1.1"
+(defproject betamax "0.1.2"
   :description "Mock out clj-http with style"
   :url "http://github.com/wjlroe/betamax"
   :license {:name "MIT"
