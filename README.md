@@ -1,6 +1,8 @@
 betamax
 =======
 
+[![Build Status](https://secure.travis-ci.org/wjlroe/betamax.png)](http://travis-ci.org/wjlroe/betamax)
+
 Mock out [clj-http](https://github.com/dakrone/clj-http) with style. Works just like [VCR](https://github.com/myronmarston/vcr).
 
 ## Usage
@@ -16,7 +18,7 @@ To test using [Midje](https://github.com/marick/Midje):
 ```clojure
 (deftest something
   (betamax/with-cassette "example-domains"
-    (fact (:body (clj-http.client/get "http://www.iana.org/domains/example/")) => 
+    (fact (:body (clj-http.client/get "http://www.iana.org/domains/example/")) =>
           #"Example Domains")))
 ```
 
@@ -29,7 +31,7 @@ To test using [Midje](https://github.com/marick/Midje):
 1. Add tests for the feature or bug
 1. Run the test suite to ensure you haven't broken anything
 1. Commit and push the changes
-1. Submit a pull request. Please do not include changes to the project.clj, version or history file. 
+1. Submit a pull request. Please do not include changes to the project.clj, version or history file.
 
 ## License
 
