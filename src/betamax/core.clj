@@ -3,7 +3,11 @@
   (:require
    [clj-http.client :as http]))
 
-(def ^:dynamic cassette-location "resources/cassettes")
+(def cassette-location (atom "resources/cassettes"))
+
+(defn configure
+  [location]
+  (reset! cassette-location location))
 
 (defmacro with-cassette
   [name & body]
@@ -13,7 +17,7 @@
 
 (defn cassette-client
   [real-http name url]
-  (let [loc (file cassette-location name)]
+  (let [loc (file @cassette-location name)]
     (if (.exists loc)
       (let [contents (read-string (slurp loc))]
         contents)

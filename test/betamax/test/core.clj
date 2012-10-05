@@ -17,3 +17,8 @@
   (with-cassette "example.com"
     (:body (clj-http.client/get "http://example.com")) =>
     #"domains such as EXAMPLE.COM"))
+
+(fact "can configure cassette location"
+  (do
+    (configure "/tmp/woot")
+    @cassette-location) => "/tmp/woot")
