@@ -5,6 +5,5 @@
             :url "http://www.opensource.org/licenses/mit-license.php"}
   :dependencies [[org.clojure/clojure "1.4.0"]
                  [clj-http "0.4.1"]]
-  :profiles {:dev {:dependencies [[midje "1.4.0"]
-                                  [com.stuartsierra/lazytest "1.2.3"]]
+  :profiles {:dev {:dependencies [[midje "1.4.0"]]
                    :plugins [[lein-midje "2.0.0-SNAPSHOT"]]}})
