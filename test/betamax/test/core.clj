@@ -8,8 +8,7 @@
 
 (fact "no cassette exists - call out to the network"
   (with-cassette "non-existant"
-    (:body (clj-http.client/get "http://www.google.co.uk")) =>
-    #"<title>Google")
+    (:body (clj-http.client/get "http://www.google.co.uk"))) => #"<title>Google"
   (provided
     (spit anything anything) => true :times 1))
 
@@ -22,3 +21,9 @@
   (do
     (configure "/tmp/woot")
     @cassette-location) => "/tmp/woot")
+
+(fact "can locate the correct track in a cassette"
+  (get-track (conj nil {:method :get :url "http://example.com" :req nil :response {:woot "hi"}})
+             :get
+             "http://example.com"
+             nil) => (contains {:response {:woot "hi"}}))
