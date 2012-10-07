@@ -19,6 +19,10 @@
    (:body (clj-http.client/get "http://www.iana.org/domains/")) =>
    #"IANA is responsible"))
 
+(fact "cassettes remember status codes"
+  (with-cassette "example.com"
+    (:status (clj-http.client/get "http://www.iana.org/domains/")) => 200))
+
 (fact "can configure cassette location"
   (do
     (configure "/tmp/woot")
