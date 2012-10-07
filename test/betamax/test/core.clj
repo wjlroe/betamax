@@ -12,10 +12,12 @@
   (provided
     (spit anything anything) => true :times 1))
 
-(fact "cassette exists - don't call out to the network"
-  (with-cassette "example.com"
-    (:body (clj-http.client/get "http://example.com")) =>
-    #"domains such as EXAMPLE.COM"))
+(with-cassette "example.com"
+ (fact "cassette exists - don't call out to the network"
+   (:body (clj-http.client/get "http://example.com")) =>
+   #"domains such as EXAMPLE.COM"
+   (:body (clj-http.client/get "http://www.iana.org/domains/")) =>
+   #"IANA is responsible"))
 
 (fact "can configure cassette location"
   (do
