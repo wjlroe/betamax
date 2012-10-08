@@ -15,7 +15,7 @@
   [tracks]
   (string/join "%n"
                (for [[method tracks] (group-by :method tracks)]
-                 (format "%s:%n%s" (string/upper-case method)
+                 (format "%s:%n%s" (string/upper-case (name method))
                          (string/join "%n"
                                       (for [[url tracks] (group-by :url tracks)]
                                         (format "  %s with req params:%n%s"
