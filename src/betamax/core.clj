@@ -59,7 +59,7 @@ and req is a map of options"
            (Exception.
             (format "No track in cassette: %s matches required url: %s, method: %s and request: %s%nTracks are:%n%s"
                     name url method req (format-tracks contents))))))
-      (let [actual-response (real-http url)
+      (let [actual-response (real-http url (merge req {:throw-exceptions false}))
             serialized-response {:method method
                                  :url url
                                  :req req
