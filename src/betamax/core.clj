@@ -42,8 +42,8 @@ and req is a map of options"
           (:response track)
           (throw
            (Exception.
-            (format "No track in cassette: %s matches required url, method and request"
-                    name)))))
+            (format "No track in cassette: %s matches required url: %s, method: %s and request: %s"
+                    name url method req)))))
       (let [actual-response (real-http url)
             serialized-response {:method method
                                  :url url

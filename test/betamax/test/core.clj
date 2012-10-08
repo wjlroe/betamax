@@ -25,6 +25,11 @@
    (:body (clj-http.client/get "http://www.iana.org/domains/")) =>
    #"IANA is responsible"))
 
+(with-cassette "example.com"
+  (fact "cassette exists - urls/options not contained within throw an exception"
+    (clj-http.client/get "http://bing.com") => (throws #"bing.com")
+    (clj-http.client/get "http://example.com" {:query-params {:q "nothing"}}) => (throws #"nothing")))
+
 (fact "cassettes remember status codes"
   (with-cassette "example.com"
     (:status (clj-http.client/get "http://www.iana.org/domains/")) => 200))
