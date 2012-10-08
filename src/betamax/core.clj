@@ -1,13 +1,28 @@
 (ns betamax.core
   (:use [clojure.java.io :only [file]])
   (:require
-   [clj-http.client :as http]))
+   [clj-http.client :as http]
+   [clojure.string :as string]))
 
 (def cassette-location (atom "resources/cassettes"))
 
 (defn configure
   [location]
   (reset! cassette-location location))
+
+(defn format-tracks
+  "Format tracks for printing in exception messages to make debugging easier"
+  [tracks]
+  (string/join "%n"
+               (for [[method tracks] (group-by :method tracks)]
+                 (format "%s:%n%s" (string/upper-case method)
+                         (string/join "%n"
+                                      (for [[url tracks] (group-by :url tracks)]
+                                        (format "  %s with req params:%n%s"
+                                                url
+                                                (string/join "%n"
+                                                             (for [[req tracks] (group-by :req tracks)]
+                                                               (format "    %s" (pr-str req)))))))))))
 
 (defn get-track
   "Find the track corresponding to the provided parameters. method is get,post,options...
@@ -42,8 +57,8 @@ and req is a map of options"
           (:response track)
           (throw
            (Exception.
-            (format "No track in cassette: %s matches required url: %s, method: %s and request: %s"
-                    name url method req)))))
+            (format "No track in cassette: %s matches required url: %s, method: %s and request: %s%nTracks are:%n%s"
+                    name url method req (format-tracks contents))))))
       (let [actual-response (real-http url)
             serialized-response {:method method
                                  :url url
