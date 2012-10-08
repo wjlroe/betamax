@@ -12,6 +12,12 @@
   (provided
     (spit anything anything) => true :times 1))
 
+(fact "write request with options"
+  (with-cassette "another-cassette"
+    (:body (clj-http.client/get "http://www.google.co.uk" {:query-params {:q "nothing"}}))) => #"<title>Google"
+  (provided
+    (spit anything (checker [actual] (re-matches #".*query-params.*" actual))) => true :times 1))
+
 (with-cassette "example.com"
  (fact "cassette exists - don't call out to the network"
    (:body (clj-http.client/get "http://example.com")) =>
