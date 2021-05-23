@@ -1,7 +1,7 @@
 betamax
 =======
 
-[![Build Status](https://secure.travis-ci.org/wjlroe/betamax.png)](http://travis-ci.org/wjlroe/betamax)
+**This project is abandoned**
 
 Mock out [clj-http](https://github.com/dakrone/clj-http) with style. Works just like [VCR](https://github.com/myronmarston/vcr).
 
